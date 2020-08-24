@@ -84,11 +84,11 @@
                 </option>
                 <option>
                     <name>OCDynDriverList</name>
-                    <state>JLINK_ID</state>
+                    <state>STLINK_ID</state>
                 </option>
                 <option>
                     <name>OCLastSavedByProductVersion</name>
-                    <state>8.20.1.14181</state>
+                    <state>8.22.1.15696</state>
                 </option>
                 <option>
                     <name>UseFlashLoader</name>
@@ -950,6 +950,27 @@
             </data>
         </settings>
         <settings>
+            <name>NULINK_ID</name>
+            <archiveVersion>2</archiveVersion>
+            <data>
+                <version>0</version>
+                <wantNonLocal>1</wantNonLocal>
+                <debug>1</debug>
+                <option>
+                    <name>OCDriverInfo</name>
+                    <state>1</state>
+                </option>
+                <option>
+                    <name>DoLogfile</name>
+                    <state>0</state>
+                </option>
+                <option>
+                    <name>LogFile</name>
+                    <state>$PROJ_DIR$\cspycomm.log</state>
+                </option>
+            </data>
+        </settings>
+        <settings>
             <name>PEMICRO_ID</name>
             <archiveVersion>2</archiveVersion>
             <data>
@@ -978,7 +999,7 @@
             <name>STLINK_ID</name>
             <archiveVersion>2</archiveVersion>
             <data>
-                <version>4</version>
+                <version>5</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -987,7 +1008,7 @@
                 </option>
                 <option>
                     <name>CCSTLinkInterfaceRadio</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>CCSTLinkInterfaceCmdLine</name>
@@ -1000,7 +1021,7 @@
                 </option>
                 <option>
                     <name>CCCpuClockEdit</name>
-                    <state></state>
+                    <state>168.0</state>
                 </option>
                 <option>
                     <name>CCSwoClockAuto</name>
@@ -1085,6 +1106,10 @@
                 </option>
                 <option>
                     <name>CCSTLinkDebugAccessPortRadio</name>
+                    <state>0</state>
+                </option>
+                <option>
+                    <name>CCSTLinkUseServerSelect</name>
                     <state>0</state>
                 </option>
             </data>
@@ -1364,6 +1389,10 @@
             </plugin>
             <plugin>
                 <file>$TOOLKIT_DIR$\plugins\rtos\embOS\embOSPlugin.ewplugin</file>
+                <loadFlag>0</loadFlag>
+            </plugin>
+            <plugin>
+                <file>$TOOLKIT_DIR$\plugins\rtos\FreeRtos\FreeRtosArmPlugin.ENU.ewplugin</file>
                 <loadFlag>0</loadFlag>
             </plugin>
             <plugin>
@@ -2365,6 +2394,27 @@
             </data>
         </settings>
         <settings>
+            <name>NULINK_ID</name>
+            <archiveVersion>2</archiveVersion>
+            <data>
+                <version>0</version>
+                <wantNonLocal>1</wantNonLocal>
+                <debug>0</debug>
+                <option>
+                    <name>OCDriverInfo</name>
+                    <state>1</state>
+                </option>
+                <option>
+                    <name>DoLogfile</name>
+                    <state>0</state>
+                </option>
+                <option>
+                    <name>LogFile</name>
+                    <state>$PROJ_DIR$\cspycomm.log</state>
+                </option>
+            </data>
+        </settings>
+        <settings>
             <name>PEMICRO_ID</name>
             <archiveVersion>2</archiveVersion>
             <data>
@@ -2393,7 +2443,7 @@
             <name>STLINK_ID</name>
             <archiveVersion>2</archiveVersion>
             <data>
-                <version>4</version>
+                <version>5</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>0</debug>
                 <option>
@@ -2500,6 +2550,10 @@
                 </option>
                 <option>
                     <name>CCSTLinkDebugAccessPortRadio</name>
+                    <state>0</state>
+                </option>
+                <option>
+                    <name>CCSTLinkUseServerSelect</name>
                     <state>0</state>
                 </option>
             </data>
@@ -2779,6 +2833,10 @@
             </plugin>
             <plugin>
                 <file>$TOOLKIT_DIR$\plugins\rtos\embOS\embOSPlugin.ewplugin</file>
+                <loadFlag>0</loadFlag>
+            </plugin>
+            <plugin>
+                <file>$TOOLKIT_DIR$\plugins\rtos\FreeRtos\FreeRtosArmPlugin.ENU.ewplugin</file>
                 <loadFlag>0</loadFlag>
             </plugin>
             <plugin>

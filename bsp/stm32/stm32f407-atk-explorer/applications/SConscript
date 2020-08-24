@@ -5,7 +5,10 @@ cwd     = GetCurrentDir()
 CPPPATH = [cwd, str(Dir('#'))]
 src     = Split("""
 main.c
+matrix_show.c
 """)
+
+path =  [cwd]
 
 group = DefineGroup('Applications', src, depend = [''], CPPPATH = CPPPATH)
 
