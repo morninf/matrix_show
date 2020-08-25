@@ -3,6 +3,7 @@
 
 #include <rtthread.h>
 
+#define MATRIX_STEP_NUM				1
 
 #define MATRIX_THREAD_NAME	"matrix"
 #define MATRIX_THREAD_STACK_SIZE	2048
