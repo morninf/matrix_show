@@ -205,8 +205,10 @@ static void matrix_show( void )
 		MATRIX_LAT_H;
 		MATRIX_LAT_L;
 		}
+		//MATRIX_LAT_H;
+		//MATRIX_LAT_L;
 		MATRIX_OE_L;
-		rt_hw_us_delay(100);
+		rt_hw_us_delay(900);
 	}
 }
 
@@ -230,7 +232,7 @@ static void matrix_thread_entry(void *parameter)
 		rt_kprintf("matrix show\n");
 		matrix_show();
 		//rt_hw_us_delay(100);
-		rt_thread_mdelay(100);
+		//rt_thread_mdelay(100);
 	}
 }
 
