@@ -16,7 +16,7 @@
 static struct rt_thread matrix_thread;
 ALIGN(RT_ALIGN_SIZE)
 static char matrix_thread_stack[MATRIX_THREAD_STACK_SIZE];
-uint8_t matrix_out_data[MATRIX_MAX_CASCADE_NUM * 2 * 32];
+uint8_t matrix_out_data[MATRIX_MAX_BUFFER_SIZE];
 #endif
 
 uint8_t *matrix_out;
@@ -206,14 +206,13 @@ static void matrix_show( void )
 		MATRIX_LAT_L;
 		}
 		MATRIX_OE_L;
-		rt_hw_us_delay(1000);
+		rt_hw_us_delay(100);
 	}
-	
 }
 
 static void matrix_buffer_prepare(void)
 {
-	for(int i =0; i < MATRIX_MAX_CASCADE_NUM * 2; i++)
+	for(int i =0; i < MATRIX_MAX_WORD; i++)
 	{
 		memcpy(&matrix_out[i*32],word_date[i] , 32);
 	}
@@ -228,9 +227,10 @@ static void matrix_thread_entry(void *parameter)
 	matrix_buffer_prepare();
 	while(1)
 	{
-		//rt_kprintf("matrix show\n");
+		rt_kprintf("matrix show\n");
 		matrix_show();
-		rt_thread_mdelay(10);
+		//rt_hw_us_delay(100);
+		rt_thread_mdelay(100);
 	}
 }
 
@@ -240,8 +240,8 @@ int matrix_thread_init(void)
     rt_thread_t tid;
 	
 #ifdef RT_USING_HEAP
-	matrix_out = (uint8_t *)rt_calloc(1, sizeof(uint8_t) * MATRIX_MAX_CASCADE_NUM * 2 * 32);
-	memset(matrix_out, 0, sizeof(uint8_t) * MATRIX_MAX_CASCADE_NUM * 2 * 32);
+	matrix_out = (uint8_t *)rt_calloc(1, sizeof(uint8_t) * MATRIX_MAX_BUFFER_SIZE);
+	memset(matrix_out, 0, sizeof(uint8_t) * MATRIX_MAX_BUFFER_SIZE);
 	
 	tid = rt_thread_create(MATRIX_THREAD_NAME,
 						   matrix_thread_entry, RT_NULL,

@@ -3,7 +3,7 @@
 
 #include "matrix_show.h"
 
-const unsigned char word_date[MATRIX_MAX_CASCADE_NUM*2][32]=
+const unsigned char word_date[MATRIX_MAX_WORD][32]=
 {
 {
 /*--  ??:  ?  --*/
