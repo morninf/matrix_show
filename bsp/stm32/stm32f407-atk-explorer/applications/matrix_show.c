@@ -16,10 +16,12 @@
 static struct rt_thread matrix_thread;
 ALIGN(RT_ALIGN_SIZE)
 static char matrix_thread_stack[MATRIX_THREAD_STACK_SIZE];
-uint8_t matrix_out_data[MATRIX_MAX_BUFFER_SIZE];
+uint8_t matrix_out_data[FONT_LEN][(AS_MATRIX_MAX_LEN];
+
 #endif
 
-uint8_t *matrix_out;
+uint8_t **matrix_out_data;
+
 
 /*
 	A------>PA0
@@ -132,30 +134,35 @@ static void matrix_set_line(uint8_t line)
 	}
 }
 
-static void matrix_show( void )
+static void matrix_show( uint8_t **matrix_out,int start)
 {
 	uint8_t dat_low;
 	uint8_t dat_low1;
 	
 	uint8_t dat_high;
 	uint8_t dat_high1;
+
+	int start_temp = start;
 	
-	//行扫描
 	for(int n = 0; n<4; n++)
 	{
-		//流转递进
 		matrix_set_line((uint8_t)(n));
-		for( int i = 0; i< 2*2*MATRIX_CASCADE_NUM; i++)
+		start_temp = start;
+		for( int i = 0; i< SHOW_LEN; i++)
 		{
 			MATRIX_OE_H;
 			MATRIX_LAT_L;
 			
-			dat_high = matrix_out[(i/2)*32+(i%2) + n*2];
-			dat_high1 = matrix_out[(i/2)*32+(i%2)+ n*2+8];
+			if( start_temp  >= (TRUE_WORD_LEN +  BLANK_MATRIX_LEN))
+				start_temp = 0;
 			
-			dat_low = matrix_out[(i/2)*32+(i%2)+ n*2+16];
-			dat_low1 = matrix_out[(i/2)*32+(i%2)+ n*2+24];
+			dat_high = matrix_out[n][start_temp];
+			dat_high1 = matrix_out[n+4][start_temp];
 			
+			dat_low = matrix_out[n+8][start_temp];
+			dat_low1 = matrix_out[n+12][start_temp];
+
+			start_temp++;
 			for( int k = 0; k < 8; k++)
 			{
 				MATRIX_CLK_L;
@@ -202,48 +209,67 @@ static void matrix_show( void )
 			MATRIX_CLK_H;
 		}
 
+		}
 		MATRIX_LAT_H;
 		MATRIX_LAT_L;
-		}
-		//MATRIX_LAT_H;
-		//MATRIX_LAT_L;
 		MATRIX_OE_L;
 		rt_hw_us_delay(900);
 	}
 }
 
+static void matrix_show_round(void)
+{
+	int start = 0;
+	while(1)
+	{
+		for(int i =0 ; i<40 ;i++)
+			matrix_show(matrix_out_data,start);
+		start +=1;
+		if(start >= TRUE_WORD_LEN +  BLANK_MATRIX_LEN)
+			start = 0;
+	}
+
+}
+
 static void matrix_buffer_prepare(void)
 {
-	for(int i =0; i < MATRIX_MAX_WORD; i++)
+	for(int i =0; i < FONT_LEN; i++)
 	{
-		memcpy(&matrix_out[i*32],word_date[i] , 32);
+		for( int j = 0; j < TRUE_WORD_LEN; j++)
+		{
+			matrix_out_data[i][j+BLANK_MATRIX_LEN] = word_date[j/2][i*2 + (j%2) ];
+		}
 	}
 }
 
 static void matrix_thread_entry(void *parameter)
 {
 	matrix_io_init();
-	if(matrix_out == NULL)
+	if(matrix_out_data == NULL)
 		rt_kprintf("matrix out buffer error\n");
 
 	matrix_buffer_prepare();
 	while(1)
 	{
-		rt_kprintf("matrix show\n");
-		matrix_show();
-		//rt_hw_us_delay(100);
-		//rt_thread_mdelay(100);
+		//matrix_show(matrix_out_data,20);
+		matrix_show_round();
 	}
+	
 }
 
 int matrix_thread_init(void)
 {
 	rt_err_t result = RT_EOK;
     rt_thread_t tid;
-	
+
 #ifdef RT_USING_HEAP
-	matrix_out = (uint8_t *)rt_calloc(1, sizeof(uint8_t) * MATRIX_MAX_BUFFER_SIZE);
-	memset(matrix_out, 0, sizeof(uint8_t) * MATRIX_MAX_BUFFER_SIZE);
+	matrix_out_data = (uint8_t **)rt_malloc(FONT_LEN * sizeof(uint8_t *));
+	for(int i = 0; i < FONT_LEN; i++ )
+	{
+		
+		matrix_out_data[i] = (uint8_t *)rt_calloc(AS_MATRIX_MAX_LEN, sizeof(uint8_t));
+		memset(matrix_out_data[i], 0, sizeof(uint8_t) * AS_MATRIX_MAX_LEN);
+	}
 	
 	tid = rt_thread_create(MATRIX_THREAD_NAME,
 						   matrix_thread_entry, RT_NULL,
