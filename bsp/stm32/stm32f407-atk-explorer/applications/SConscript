@@ -6,6 +6,8 @@ CPPPATH = [cwd, str(Dir('#'))]
 src     = Split("""
 main.c
 matrix_show.c
+com_with_esp.c
+get_matrix.c
 """)
 
 path =  [cwd]

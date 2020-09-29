@@ -50,7 +50,7 @@
 #define RT_USING_COMPONENTS_INIT
 #define RT_USING_USER_MAIN
 #define RT_MAIN_THREAD_STACK_SIZE 2048
-#define RT_MAIN_THREAD_PRIORITY 10
+#define RT_MAIN_THREAD_PRIORITY 25
 
 /* C++ features */
 
@@ -80,7 +80,7 @@
 #define RT_PIPE_BUFSZ 512
 #define RT_USING_SERIAL
 #define RT_SERIAL_USING_DMA
-#define RT_SERIAL_RB_BUFSZ 64
+#define RT_SERIAL_RB_BUFSZ 256
 #define RT_USING_PIN
 
 /* Using USB */
@@ -165,6 +165,8 @@
 #define BSP_USING_GPIO
 #define BSP_USING_UART
 #define BSP_USING_UART1
+#define BSP_USING_UART3
+
 
 /* Board extended module Drivers */
 

@@ -550,7 +550,6 @@ static rt_err_t rt_serial_init(struct rt_device *dev)
 {
     rt_err_t result = RT_EOK;
     struct rt_serial_device *serial;
-
     RT_ASSERT(dev != RT_NULL);
     serial = (struct rt_serial_device *)dev;
 
@@ -572,7 +571,6 @@ static rt_err_t rt_serial_open(struct rt_device *dev, rt_uint16_t oflag)
 
     RT_ASSERT(dev != RT_NULL);
     serial = (struct rt_serial_device *)dev;
-
     LOG_D("open serial device: 0x%08x with open flag: 0x%04x",
         dev, oflag);
     /* check device flag with the open flag */

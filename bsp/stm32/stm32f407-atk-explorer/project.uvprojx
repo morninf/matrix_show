@@ -332,7 +332,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER, STM32F407xx</Define>
               <Undefine></Undefine>
-              <IncludePath>.;..\..\..\include;applications;.;board;board\CubeMX_Config\Inc;board\ports;..\libraries\HAL_Drivers;..\libraries\HAL_Drivers\config;..\..\..\libcpu\arm\common;..\..\..\libcpu\arm\cortex-m4;..\..\..\components\finsh;..\..\..\components\libc\compilers\common;..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Inc;..\libraries\STM32F4xx_HAL\CMSIS\Device\ST\STM32F4xx\Include;..\libraries\STM32F4xx_HAL\CMSIS\Include;..\..\..\components\drivers\include</IncludePath>
+              <IncludePath>.;..\..\..\include;applications;.;board;board\CubeMX_Config\Inc;board\ports;..\libraries\HAL_Drivers;..\libraries\HAL_Drivers\config;..\..\..\libcpu\arm\common;..\..\..\libcpu\arm\cortex-m4;..\..\..\components\finsh;..\..\..\components\libc\compilers\common;..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Inc;..\libraries\STM32F4xx_HAL\CMSIS\Device\ST\STM32F4xx\Include;..\libraries\STM32F4xx_HAL\CMSIS\Include;..\..\..\components\drivers\include;..\libraries\HAL_Drivers;..\libraries\HAL_Drivers\drv_flash</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -474,6 +474,16 @@
               <FileName>matrix_show.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\applications\matrix_show.c</FilePath>
+            </File>
+            <File>
+              <FileName>com_with_esp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\applications\com_with_esp.c</FilePath>
+            </File>
+            <File>
+              <FileName>get_matrix.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\applications\get_matrix.c</FilePath>
             </File>
           </Files>
         </Group>

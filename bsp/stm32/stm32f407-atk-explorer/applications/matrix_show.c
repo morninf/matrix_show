@@ -22,7 +22,7 @@ uint8_t matrix_out_data[FONT_LEN][(AS_MATRIX_MAX_LEN];
 
 uint8_t **matrix_out_data;
 
-
+static int show_word_len=0;
 /*
 	A------>PA0
 	B------>PA1
@@ -153,7 +153,7 @@ static void matrix_show( uint8_t **matrix_out,int start)
 			MATRIX_OE_H;
 			MATRIX_LAT_L;
 			
-			if( start_temp  >= (TRUE_WORD_LEN +  BLANK_MATRIX_LEN))
+			if( start_temp  >= (show_word_len +  BLANK_MATRIX_LEN))
 				start_temp = 0;
 			
 			dat_high = matrix_out[n][start_temp];
@@ -225,21 +225,57 @@ static void matrix_show_round(void)
 		for(int i =0 ; i<40 ;i++)
 			matrix_show(matrix_out_data,start);
 		start +=1;
-		if(start >= TRUE_WORD_LEN +  BLANK_MATRIX_LEN)
+		if(start >= show_word_len +  BLANK_MATRIX_LEN)
 			start = 0;
 	}
 
 }
+void set_matrix_data(int *index,int ifasc,uint8_t *data_from)
+{
+	int start = *index;
+	for(int i =0; i < FONT_LEN; i++)
+	{
+		if(ifasc)
+		{
+			matrix_out_data[i][start+BLANK_MATRIX_LEN] = data_from[i];
+		}
+		else
+		{
+			matrix_out_data[i][start+BLANK_MATRIX_LEN] = data_from[i*2];
+			matrix_out_data[i][start+1+BLANK_MATRIX_LEN] = data_from[i*2+1];
+		}
+	}
+	if(ifasc)
+	{
+		*index+=1;
+	}
+	else
+	{
+		*index+=2;
+	}
+}
 
 static void matrix_buffer_prepare(void)
 {
-	for(int i =0; i < FONT_LEN; i++)
+	int idx = 0;
+	for( int i = 0; i < TRUE_WORD_LEN; i++)
 	{
-		for( int j = 0; j < TRUE_WORD_LEN; j++)
-		{
-			matrix_out_data[i][j+BLANK_MATRIX_LEN] = word_date[j/2][i*2 + (j%2) ];
-		}
+		set_matrix_data(&idx,0,(uint8_t *)word_date[i]);
 	}
+}
+
+void clean_matrix_buffer(void)
+{
+	for(int i = 0; i < FONT_LEN; i++ )
+	{
+		memset(matrix_out_data[i], 0, sizeof(uint8_t) * AS_MATRIX_MAX_LEN);
+	}
+
+}
+
+void set_show_len(int len)
+{
+	show_word_len = len;
 }
 
 static void matrix_thread_entry(void *parameter)
@@ -261,6 +297,7 @@ int matrix_thread_init(void)
 {
 	rt_err_t result = RT_EOK;
     rt_thread_t tid;
+	show_word_len = TRUE_WORD_LEN;
 
 #ifdef RT_USING_HEAP
 	matrix_out_data = (uint8_t **)rt_malloc(FONT_LEN * sizeof(uint8_t *));

@@ -31,8 +31,16 @@
 #define TRUE_WORD_LEN						( TURE_WORD_NUM * 2 )
 
 #define MATRIX_THREAD_NAME	"matrix"
-#define MATRIX_THREAD_STACK_SIZE	4096
+#define MATRIX_THREAD_STACK_SIZE	1024
+<<<<<<< HEAD
+#define MATRIX_THREAD_PRIORITY		25
+=======
 #define MATRIX_THREAD_PRIORITY		21
+>>>>>>> 4a7dcaa0f8ecc6170d325c6c8a2146e0594217e1
 
+void set_matrix_data(int *index,int ifasc,uint8_t *data_from);
+void set_show_len(int len);
+
+void clean_matrix_buffer(void);
 
 #endif
