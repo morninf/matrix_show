@@ -5,16 +5,13 @@
 #include <board.h>
 #include <drv_flash.h>
 #include "com_with_esp.h"
-<<<<<<< HEAD
 #include "matrix_show.h"
-=======
->>>>>>> 4a7dcaa0f8ecc6170d325c6c8a2146e0594217e1
 #include "get_matrix.h"
 
 #ifdef _WIN32
 #include <stdio.h> /* for putchar */
 #endif
-<<<<<<< HEAD
+
 static int stm32_flash_read(rt_uint32_t addr, rt_uint8_t *buf, size_t size)
 {
     size_t i;
@@ -93,21 +90,8 @@ static int get_unicode_offset(uint8_t *unicode8,int len,uint16_t *unicode16)
 
 	}
 	return idx16;
-=======
-
-static uint16_t utf8_to_unicode(uint8_t      *utf8)
-{
-	
 }
 
-static int get_unicode_offset(uint16_t uni)
-{
->>>>>>> 4a7dcaa0f8ecc6170d325c6c8a2146e0594217e1
-
-
-}
-
-<<<<<<< HEAD
 static uint16_t get_gbk_number(uint16_t unicode)
 {
 	uint8_t buf[2] = {0};
@@ -194,27 +178,6 @@ void get_matrix(int type,uint8_t *data_in,int len)
 		}
 		set_show_len(show_len);
 		rt_kprintf("\n");
-=======
-static uint16_t get_gbk_number(int offset)
-{
-
-}
-
-int get_matrix(int type,uint8_t *utf8, uint8_t* matrix_dat,int *len)
-{
-	int index = 0;
-	if( type == code_type_utf8)
-	{
-		
-
-	
-	}
-	else if( type == code_type_unicode )
-	{
-	}
-	else
-	{
->>>>>>> 4a7dcaa0f8ecc6170d325c6c8a2146e0594217e1
 	}
 }
 
